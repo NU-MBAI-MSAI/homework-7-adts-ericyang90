@@ -50,33 +50,38 @@ class BST:
         return tree
 
     def traverse_pre(self):
-        traverse = []
+        traverse_vals = []
+        traverse_nodes = []
+        #tree.root, tree.left, tree.right are Node objects
 
-        #note that tree.root, tree.left, tree.right are Node objects
-
-        #add value of root to list
+        #add root to list
         #set current node as the root
-        traverse.append(tree.root.val)
+        traverse_nodes.append(tree.root)
+        traverse_vals.append(tree.root.val)
         curr_node = tree.root
 
         #start recursing
         for i in range(6):
             #check if curr_node has a left node that is not in the list traverse already
             #if yes, then add the value of that node to the list, and set curr_node to the left node
-            if curr_node.left is not None and curr_node.left.val in traverse:
-                traverse.append(curr_node.left.val)
+            if curr_node.left is not None and curr_node.left not in traverse_nodes:
+                traverse_nodes.append(curr_node.left)
+                traverse_vals.append(curr_node.left.val)
                 curr_node = curr_node.left
 
             #if no, then check if curr_node has a right node that is not in the list traverse already
             #if yes, then add the value of that node to the list, and set curr_node to the right node
-            elif curr_node.right is not None and curr_node.right.val in traverse:
-                traverse.append(curr_node.right.val)
+            elif curr_node.right is not None and curr_node.right not in traverse_nodes:
+                traverse_nodes.append(curr_node.right)
+                traverse_vals.append(curr_node.right.val)
                 curr_node = curr_node.right
 
             #if there is neither a left node or a right node that is not part of the list
-            #  set the curr_node as the parent (defined as the last list added to traverse)
+            #  set the curr_node as the parent of the current node
+            #  to determine the parent, find the index of the current node in the list traverse_nodes
+            #       then, set curr_node as the index before that
             else:
-                curr_node =
+                c
 
         #whichever node was added is now the next one - check if there is a left; if so, add it
         #if not, check if there is a right; if so, add it
@@ -86,10 +91,10 @@ class BST:
 if __name__ == '__main__':
     nodes = [25, 20, 30, 29, 35, 15, 22]
     tree = BST.create(nodes)
-    print(tree.root)
-    print(tree.root.val)
-    print(tree.root.left.val)
-    print(tree.root.right.val)
-    print(tree.traverse_pre())
+    #print(tree.root)
+    #print(tree.root.val)
+    #print(tree.root.left.val)
+    #print(tree.root.right.val)
+    tree.traverse_pre()
     # print(tree.traverse_pre()) # -> This should return the list [25, 20, 15, 22, 30, 29, 35]
     # print(tree.traverse_post()) # -> This should return the list [15, 22, 20, 29, 35, 30, 25]
